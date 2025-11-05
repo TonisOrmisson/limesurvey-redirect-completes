@@ -10,9 +10,19 @@ Redirect participants who try to access a LimeSurvey survey with a token that ha
 - Sanitizes the final URL before redirecting (`javascript:` etc. are ignored).
 
 ## Installation
-1. Copy the plugin folder (`upload/plugins/RedirectCompletedParticipant`) into your LimeSurvey instance.
-2. In the Admin UI, go to **Configuration → Plugins**, find *RedirectCompletedParticipant*, and click **Activate**.
-3. Click **Settings** to configure:
+## Install to plugins folder
+
+```
+cd /LimeSurveyFolder/plugins
+```
+
+
+```
+git clone https://github.com/TonisOrmisson/limesurvey-redirect-completes.git  RedirectCompletedParticipant
+```
+
+In the Admin UI, go to **Configuration → Plugins**, find *RedirectCompletedParticipant*, and click **Activate**. 
+Click **Settings** to configure:
    - **Enable redirect for all surveys by default**: when on, every survey inherits the redirect unless explicitly disabled.
    - **Default redirect URL template**: fallback template (e.g., `https://example.com/?token={TOKEN}`).
    - **Parse ExpressionScript placeholders in default template**: toggle Expression Manager processing for the default template.
