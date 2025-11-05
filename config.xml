@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <metadata>
+        <name>RedirectCompletedParticipant</name>
+        <type>plugin</type>
+        <creationDate>2025-11-04</creationDate>
+        <last_update>2025-11-04</last_update>
+        <author>Tonis Ormisson</author>
+        <authorUrl>https://github.com/andmemasin</authorUrl>
+        <license>GPLv3</license>
+        <version>0.1.0</version>
+        <description>Redirect completed-token visitors to custom URLs.</description>
+    </metadata>
+    <compatibility>
+        <version>5.0</version>
+        <version>6.0</version>
+    </compatibility>
+    <updaters disabled="disabled"></updaters>
+</config>
