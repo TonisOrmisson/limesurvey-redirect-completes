@@ -8,7 +8,7 @@
         <author>Tonis Ormisson</author>
         <authorUrl>https://andmemasin.eu</authorUrl>
         <license>GPLv3</license>
-        <version>0.2.0</version>
+        <version>0.2.1</version>
         <description>Redirect completed-token visitors to custom URLs.</description>
     </metadata>
     <compatibility>

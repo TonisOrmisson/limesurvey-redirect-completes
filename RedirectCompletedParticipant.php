@@ -212,27 +212,29 @@ class RedirectCompletedParticipant extends PluginBase
         } else {
             $rendered = $this->simpleReplace($template, $replacements);
         }
-
+        $this->log($rendered);
         return $this->sanitizeRedirectUrl($rendered);
     }
 
     protected function buildReplacementData(Survey $survey, Token $token, $response)
     {
         $entryLanguage = trim((string) App()->language);
+        //$this->log("EntryLanguage:".$entryLanguage);
         $replacements = [
             'SID' => $survey->sid,
             'SURVEYID' => $survey->sid,
             'SURVEYNAME' => $survey->localizedTitle,
             'TOKEN' => $token->token,
         ];
-        if ($entryLanguage !== '') {
-            $replacements['LANGUAGE'] = $entryLanguage;
-        }
 
         foreach ($token->attributes as $attribute => $value) {
             $key = strtoupper((string) $attribute);
             $replacements[$key] = $value;
             $replacements['TOKEN:' . $key] = $value;
+        }
+
+        if ($entryLanguage !== '') {
+            $replacements['LANGUAGE'] = $entryLanguage;
         }
 
         if ($response) {
@@ -257,6 +259,7 @@ class RedirectCompletedParticipant extends PluginBase
                 $replacements[strtoupper($code)] = $value;
             }
         }
+        $this->log("replacements:".json_encode($replacements));
 
         return $replacements;
     }
