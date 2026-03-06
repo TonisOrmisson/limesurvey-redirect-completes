@@ -218,12 +218,16 @@ class RedirectCompletedParticipant extends PluginBase
 
     protected function buildReplacementData(Survey $survey, Token $token, $response)
     {
+        $entryLanguage = trim((string) App()->language);
         $replacements = [
             'SID' => $survey->sid,
             'SURVEYID' => $survey->sid,
             'SURVEYNAME' => $survey->localizedTitle,
             'TOKEN' => $token->token,
         ];
+        if ($entryLanguage !== '') {
+            $replacements['LANGUAGE'] = $entryLanguage;
+        }
 
         foreach ($token->attributes as $attribute => $value) {
             $key = strtoupper((string) $attribute);
@@ -233,7 +237,7 @@ class RedirectCompletedParticipant extends PluginBase
 
         if ($response) {
             Yii::app()->loadHelper('common');
-            $language = $response->startlanguage ?: $survey->language;
+            $language = $entryLanguage !== '' ? $entryLanguage : $survey->language;
             $fieldMap = createFieldMap($survey, 'short', false, false, $language);
             $attributes = $response->attributes;
             foreach ($fieldMap as $field) {

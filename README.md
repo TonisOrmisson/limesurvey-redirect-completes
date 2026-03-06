@@ -38,6 +38,7 @@ Templates support any Expression Manager variable available at denial time. Comm
 - `{TOKEN}` – current token string.
 - `{TOKEN:FIRSTNAME}` – token attribute.
 - `{SID}` – survey ID.
+- `{LANGUAGE}` – current entry language (`App()->language`).
 - `{QCODE}` – response field codes (e.g., `{AGE}`) if a completed response exists.
 
 ## Development
