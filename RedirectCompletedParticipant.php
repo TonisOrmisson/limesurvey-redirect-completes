@@ -27,6 +27,14 @@ class RedirectCompletedParticipant extends PluginBase
             ],
             'default' => '',
         ],
+        'defaultQuotaRedirectUrl' => [
+            'type' => 'string',
+            'label' => 'Default quota redirect URL template',
+            'htmlOptions' => [
+                'placeholder' => 'https://example.com/quota?token={TOKEN}'
+            ],
+            'default' => '',
+        ],
         'defaultParseExpressions' => [
             'type' => 'boolean',
             'label' => 'Parse ExpressionScript placeholders in default template',
@@ -62,6 +70,14 @@ class RedirectCompletedParticipant extends PluginBase
                         'placeholder' => 'https://example.com/?token={TOKEN}'
                     ],
                     'current' => $this->get('redirectUrl', 'Survey', $surveyId),
+                ],
+                'quotaRedirectUrl' => [
+                    'type' => 'string',
+                    'label' => gT('Quota redirect URL template'),
+                    'htmlOptions' => [
+                        'placeholder' => 'https://example.com/quota?token={TOKEN}'
+                    ],
+                    'current' => $this->get('quotaRedirectUrl', 'Survey', $surveyId),
                 ],
                 'parseExpressions' => [
                     'type' => 'boolean',
@@ -191,10 +207,7 @@ class RedirectCompletedParticipant extends PluginBase
     protected function buildRedirectUrl(Survey $survey, Token $token, $response)
     {
         $surveyId = (int) $survey->sid;
-        $template = $this->get('redirectUrl', 'Survey', $surveyId);
-        if ($template === null || trim((string) $template) === '') {
-            $template = $this->get('defaultRedirectUrl', null, null, '');
-        }
+        $template = $this->resolveRedirectTemplate($surveyId, $token);
         $template = trim((string) $template);
         if ($template === '') {
             return null;
@@ -214,6 +227,28 @@ class RedirectCompletedParticipant extends PluginBase
         }
         $this->log($rendered);
         return $this->sanitizeRedirectUrl($rendered);
+    }
+
+    protected function resolveRedirectTemplate($surveyId, Token $token)
+    {
+        if ($token->completed === 'Q') {
+            $quotaTemplate = $this->get('quotaRedirectUrl', 'Survey', $surveyId);
+            if ($quotaTemplate !== null && trim((string) $quotaTemplate) !== '') {
+                return $quotaTemplate;
+            }
+
+            $defaultQuotaTemplate = $this->get('defaultQuotaRedirectUrl', null, null, '');
+            if (trim((string) $defaultQuotaTemplate) !== '') {
+                return $defaultQuotaTemplate;
+            }
+        }
+
+        $template = $this->get('redirectUrl', 'Survey', $surveyId);
+        if ($template === null || trim((string) $template) === '') {
+            $template = $this->get('defaultRedirectUrl', null, null, '');
+        }
+
+        return $template;
     }
 
     protected function buildReplacementData(Survey $survey, Token $token, $response)

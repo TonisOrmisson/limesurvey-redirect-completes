@@ -4,11 +4,11 @@
         <name>RedirectCompletedParticipant</name>
         <type>plugin</type>
         <creationDate>2025-11-04</creationDate>
-        <last_update>2026-03-06</last_update>
+        <last_update>2026-03-18</last_update>
         <author>Tonis Ormisson</author>
         <authorUrl>https://andmemasin.eu</authorUrl>
         <license>GPLv3</license>
-        <version>0.2.1</version>
+        <version>0.3.0</version>
         <description>Redirect completed-token visitors to custom URLs.</description>
     </metadata>
     <compatibility>
